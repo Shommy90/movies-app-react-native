@@ -8,14 +8,16 @@ import {
   ImageBackground,
 } from "react-native";
 
-const MovieDetails = () => {
+const MovieDetails = (props) => {
+  const movie = props.route.params;
+  console.log("details props: ", movie);
+
   return (
     <ScrollView>
       <View style={styles.backdropImgHolder}>
         <ImageBackground
           source={{
-            uri:
-              "https://wookie.codesubmit.io/static/posters/d6822b7b-48bb-4b78-ad5e-9ba04c517ec8.jpg",
+            uri: movie.backdrop,
           }}
           style={styles.backdropImg}
         ></ImageBackground>
@@ -26,44 +28,40 @@ const MovieDetails = () => {
           <Image
             style={styles.poster}
             source={{
-              uri:
-                "https://wookie.codesubmit.io/static/posters/d6822b7b-48bb-4b78-ad5e-9ba04c517ec8.jpg",
+              uri: movie.poster,
             }}
           />
 
           <View style={styles.titleRatingHolder}>
             <Text style={styles.movieTitle}>
-              title jfnds sdkf jksdk sd (rating)
+              {movie.title} ({movie.imdb_rating})
             </Text>
-            <Text>stars</Text>
           </View>
         </View>
 
         <View style={styles.infoHolder}>
           <View style={styles.infoDetails}>
-            <Text style={styles.infoDetailsText}>year</Text>
+            <Text style={styles.infoDetailsText}>
+              {movie.released_on.substring(0, 4)}
+            </Text>
             <Text style={styles.lineBetween}>|</Text>
-            <Text style={styles.infoDetailsText}>length</Text>
+            <Text style={styles.infoDetailsText}>{movie.length}</Text>
             <Text style={styles.lineBetween}>|</Text>
-            <Text style={styles.infoDetailsText}>director</Text>
+            <Text style={[styles.infoDetailsText, { flex: 1 }]}>
+              {movie.director}
+            </Text>
           </View>
         </View>
 
         <View style={styles.castHolder}>
           <Text style={styles.infoTitle}>Cast:</Text>
-          <Text style={styles.text}>name, name, name</Text>
+          {movie &&
+            movie.cast.map((actor) => <Text style={styles.text}>{actor}</Text>)}
         </View>
 
         <View style={styles.descriptionHolder}>
           <Text style={styles.infoTitle}>Movie Description:</Text>
-          <Text style={styles.text}>
-            lorem fksdfksjdfn ksjdfhksdjf jsdfk sdjf kdsj fksdfksjdfnsdkj jsd
-            fkjsdf kjdgdfgdfghjk sdj ksdjsdfg dfg jhg jsdk
-            sdhgjkhjgkdfhjkgdfhkghjkdfhgjkdfhjkgh sj ghjkdfg df lorem
-            fksdfksjdfn ksjdfhksdjf jsdfk sdjf kdsj fksdfksjdfnsdkj jsd fkjsdf
-            kjdgdfgdfghjk sdj ksdjsdfg dfg jhg jsdk
-            sdhgjkhjgkdfhjkgdfhkghjkdfhgjkdfhjkgh sj ghjkdfg df
-          </Text>
+          <Text style={styles.text}>{movie.overview}</Text>
         </View>
       </View>
     </ScrollView>
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   content: {
-    padding: 30,
+    padding: 20,
     position: "relative",
     top: -100,
     marginBottom: -100,
@@ -100,15 +98,19 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   movieTitle: {
-    fontSize: 25,
+    fontSize: 26,
+    fontWeight: "bold",
+    backgroundColor: "rgba(0,0,0, 0.7)",
+    color: "#fff",
+    padding: 5,
   },
   infoDetails: {
     flexDirection: "row",
     alignItems: "center",
+    paddingVertical: 15,
   },
   lineBetween: {
     marginHorizontal: 10,
-    paddingVertical: 15,
   },
   castHolder: {
     paddingVertical: 10,
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
   },
   infoDetailsText: {
     fontSize: 20,
+    flexWrap: "wrap",
   },
   text: {
     fontSize: 18,

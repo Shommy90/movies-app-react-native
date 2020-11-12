@@ -1,42 +1,140 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
+import MovieItemHome from "../components/MovieItemHome";
 
 const Home = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    fetchMovies();
+  }, []);
+
+  const fetchMovies = async () => {
+    try {
+      setLoading(true);
+      const bearer = "Bearer Wookie2019";
+      const url = `https://wookie.codesubmit.io/movies`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: bearer,
+        },
+      });
+      const result = await response.json();
+      setMovies(result.movies);
+      setLoading(false);
+
+      console.log("results HOME:", result.movies);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Movie Details", item)}
+      >
+        <MovieItemHome item={item} />
+      </TouchableOpacity>
+    );
+  };
+
   return (
-    <View style={styles.container}>
+    <ScrollView>
       <View style={styles.titleHolder}>
         <Text style={styles.title}>wookie</Text>
         <Text style={styles.title}>movies</Text>
       </View>
 
-      <Text
-        onPress={() => navigation.navigate("Movie Details")}
-        style={styles.title}
-      >
-        DETAILS
-      </Text>
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <View>
+          <View style={styles.movieListHolder}>
+            <Text style={styles.genreTitle}>Action</Text>
 
-      <View style={styles.movieListHolder}>
-        <Text>genre</Text>
-      </View>
+            <FlatList
+              horizontal={true}
+              data={movies}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
 
-      <View style={styles.movieListHolder}>
-        <Text>genre</Text>
-      </View>
+          <View style={styles.movieListHolder}>
+            <Text style={styles.genreTitle}>Animation</Text>
 
-      <View style={styles.movieListHolder}>
-        <Text>genre</Text>
-      </View>
-    </View>
+            <FlatList
+              horizontal={true}
+              data={movies}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+
+          <View style={styles.movieListHolder}>
+            <Text style={styles.genreTitle}>Adventure</Text>
+
+            <FlatList
+              horizontal={true}
+              data={movies}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+
+          <View style={styles.movieListHolder}>
+            <Text style={styles.genreTitle}>Crime</Text>
+
+            <FlatList
+              horizontal={true}
+              data={movies}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+
+          <View style={styles.movieListHolder}>
+            <Text style={styles.genreTitle}>Drama</Text>
+
+            <FlatList
+              horizontal={true}
+              data={movies}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+
+          <View style={styles.movieListHolder}>
+            <Text style={styles.genreTitle}>Family</Text>
+
+            <FlatList
+              horizontal={true}
+              data={movies}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+            />
+          </View>
+        </View>
+      )}
+    </ScrollView>
   );
 };
 
 export default Home;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: {},
   titleHolder: {
     alignItems: "center",
     paddingVertical: 10,
@@ -50,5 +148,10 @@ const styles = StyleSheet.create({
   movieListHolder: {
     paddingLeft: 30,
     paddingVertical: 10,
+  },
+  genreTitle: {
+    fontSize: 24,
+    textTransform: "capitalize",
+    marginBottom: 7,
   },
 });

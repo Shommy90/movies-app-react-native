@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,26 +6,80 @@ import {
   TextInput,
   ScrollView,
   TouchableOpacity,
-  Button,
+  ActivityIndicator,
+  FlatList,
 } from "react-native";
 import MovieItemSearch from "../components/MovieItemSearch";
 
 const Search = ({ navigation }) => {
+  const [textInput, setTextInput] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchMovie();
+  }, []);
+
+  const fetchMovie = async () => {
+    try {
+      setLoading(true);
+      const bearer = "Bearer Wookie2019";
+      const url = `https://wookie.codesubmit.io/movies?q=${textInput}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: bearer,
+        },
+      });
+      const result = await response.json();
+      setMovies(result.movies);
+      setLoading(false);
+
+      console.log("results:", result.movies);
+    } catch (error) {
+      console.log("error - ", error);
+    }
+  };
+
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        style={{ marginBottom: 10 }}
+        onPress={() => navigation.navigate("Movie Details", item)}
+      >
+        <MovieItemSearch item={item} />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Search The Movie</Text>
 
       <View style={styles.textInputHolder}>
-        <TextInput style={styles.textInput} />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Search..."
+          value={textInput}
+          onChangeText={(text) => setTextInput(text)}
+        />
 
-        <TouchableOpacity style={styles.buttonSearch}>
+        <TouchableOpacity style={styles.buttonSearch} onPress={fetchMovie}>
           <Text style={styles.buttonSearchText}>Search</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Movie Details")}>
-        <MovieItemSearch />
-      </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <View>
+          <FlatList
+            data={movies}
+            keyExtractor={(item) => item.id}
+            renderItem={renderItem}
+          />
+        </View>
+      )}
     </ScrollView>
   );
 };
