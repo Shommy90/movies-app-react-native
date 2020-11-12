@@ -39,14 +39,88 @@ const Home = ({ navigation }) => {
     }
   };
 
-  const renderItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        onPress={() => navigation.navigate("Movie Details", item)}
-      >
-        <MovieItemHome item={item} />
-      </TouchableOpacity>
-    );
+  const renderAction = ({ item }) => {
+    return item.genres.map((genre) => {
+      if (genre === "Action") {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movie Details", item)}
+          >
+            <MovieItemHome item={item} />
+          </TouchableOpacity>
+        );
+      }
+    });
+  };
+
+  const renderAnimation = ({ item }) => {
+    return item.genres.map((genre) => {
+      if (genre === "Animation") {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movie Details", item)}
+          >
+            <MovieItemHome item={item} />
+          </TouchableOpacity>
+        );
+      }
+    });
+  };
+
+  const renderAdventure = ({ item }) => {
+    return item.genres.map((genre) => {
+      if (genre === "Adventure") {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movie Details", item)}
+          >
+            <MovieItemHome item={item} />
+          </TouchableOpacity>
+        );
+      }
+    });
+  };
+
+  const renderCrime = ({ item }) => {
+    return item.genres.map((genre) => {
+      if (genre === "Crime") {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movie Details", item)}
+          >
+            <MovieItemHome item={item} />
+          </TouchableOpacity>
+        );
+      }
+    });
+  };
+
+  const renderDrama = ({ item }) => {
+    return item.genres.map((genre) => {
+      if (genre === "Drama") {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movie Details", item)}
+          >
+            <MovieItemHome item={item} />
+          </TouchableOpacity>
+        );
+      }
+    });
+  };
+
+  const renderFamily = ({ item }) => {
+    return item.genres.map((genre) => {
+      if (genre === "Family") {
+        return (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Movie Details", item)}
+          >
+            <MovieItemHome item={item} />
+          </TouchableOpacity>
+        );
+      }
+    });
   };
 
   return (
@@ -66,7 +140,7 @@ const Home = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={movies}
-              renderItem={renderItem}
+              renderItem={renderAction}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -77,7 +151,7 @@ const Home = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={movies}
-              renderItem={renderItem}
+              renderItem={renderAnimation}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -88,7 +162,7 @@ const Home = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={movies}
-              renderItem={renderItem}
+              renderItem={renderAdventure}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -99,7 +173,7 @@ const Home = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={movies}
-              renderItem={renderItem}
+              renderItem={renderCrime}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -110,7 +184,7 @@ const Home = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={movies}
-              renderItem={renderItem}
+              renderItem={renderDrama}
               keyExtractor={(item) => item.id}
             />
           </View>
@@ -121,7 +195,7 @@ const Home = ({ navigation }) => {
             <FlatList
               horizontal={true}
               data={movies}
-              renderItem={renderItem}
+              renderItem={renderFamily}
               keyExtractor={(item) => item.id}
             />
           </View>
