@@ -40,11 +40,12 @@ const Home = ({ navigation }) => {
   };
 
   const renderAction = ({ item }) => {
-    return item.genres.map((genre) => {
+    return item.genres.map((genre, i) => {
       if (genre === "Action") {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate("Movie Details", item)}
+            key={i}
           >
             <MovieItemHome item={item} />
           </TouchableOpacity>
@@ -54,11 +55,12 @@ const Home = ({ navigation }) => {
   };
 
   const renderAnimation = ({ item }) => {
-    return item.genres.map((genre) => {
+    return item.genres.map((genre, i) => {
       if (genre === "Animation") {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate("Movie Details", item)}
+            key={i}
           >
             <MovieItemHome item={item} />
           </TouchableOpacity>
@@ -68,11 +70,12 @@ const Home = ({ navigation }) => {
   };
 
   const renderAdventure = ({ item }) => {
-    return item.genres.map((genre) => {
+    return item.genres.map((genre, i) => {
       if (genre === "Adventure") {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate("Movie Details", item)}
+            key={i}
           >
             <MovieItemHome item={item} />
           </TouchableOpacity>
@@ -82,11 +85,12 @@ const Home = ({ navigation }) => {
   };
 
   const renderCrime = ({ item }) => {
-    return item.genres.map((genre) => {
+    return item.genres.map((genre, i) => {
       if (genre === "Crime") {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate("Movie Details", item)}
+            key={i}
           >
             <MovieItemHome item={item} />
           </TouchableOpacity>
@@ -96,11 +100,12 @@ const Home = ({ navigation }) => {
   };
 
   const renderDrama = ({ item }) => {
-    return item.genres.map((genre) => {
+    return item.genres.map((genre, i) => {
       if (genre === "Drama") {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate("Movie Details", item)}
+            key={i}
           >
             <MovieItemHome item={item} />
           </TouchableOpacity>
@@ -110,11 +115,12 @@ const Home = ({ navigation }) => {
   };
 
   const renderFamily = ({ item }) => {
-    return item.genres.map((genre) => {
+    return item.genres.map((genre, i) => {
       if (genre === "Family") {
         return (
           <TouchableOpacity
             onPress={() => navigation.navigate("Movie Details", item)}
+            key={i}
           >
             <MovieItemHome item={item} />
           </TouchableOpacity>
@@ -138,7 +144,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.genreTitle}>Action</Text>
 
             <FlatList
-              horizontal={true}
+              horizontal
               data={movies}
               renderItem={renderAction}
               keyExtractor={(item) => item.id}
@@ -149,7 +155,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.genreTitle}>Animation</Text>
 
             <FlatList
-              horizontal={true}
+              horizontal
               data={movies}
               renderItem={renderAnimation}
               keyExtractor={(item) => item.id}
@@ -160,7 +166,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.genreTitle}>Adventure</Text>
 
             <FlatList
-              horizontal={true}
+              horizontal
               data={movies}
               renderItem={renderAdventure}
               keyExtractor={(item) => item.id}
@@ -171,7 +177,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.genreTitle}>Crime</Text>
 
             <FlatList
-              horizontal={true}
+              horizontal
               data={movies}
               renderItem={renderCrime}
               keyExtractor={(item) => item.id}
@@ -182,7 +188,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.genreTitle}>Drama</Text>
 
             <FlatList
-              horizontal={true}
+              horizontal
               data={movies}
               renderItem={renderDrama}
               keyExtractor={(item) => item.id}
@@ -193,7 +199,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.genreTitle}>Family</Text>
 
             <FlatList
-              horizontal={true}
+              horizontal
               data={movies}
               renderItem={renderFamily}
               keyExtractor={(item) => item.id}

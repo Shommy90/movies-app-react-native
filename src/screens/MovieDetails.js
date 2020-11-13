@@ -56,7 +56,11 @@ const MovieDetails = (props) => {
         <View style={styles.castHolder}>
           <Text style={styles.infoTitle}>Cast:</Text>
           {movie &&
-            movie.cast.map((actor) => <Text style={styles.text}>{actor}</Text>)}
+            movie.cast.map((actor, i) => (
+              <Text key={i} style={styles.text}>
+                {actor}
+              </Text>
+            ))}
         </View>
 
         <View style={styles.descriptionHolder}>

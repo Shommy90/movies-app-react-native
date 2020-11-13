@@ -52,35 +52,32 @@ const Search = ({ navigation }) => {
     );
   };
 
-  return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Search The Movie</Text>
+  return loading ? (
+    <ActivityIndicator size="large" />
+  ) : (
+    <FlatList
+      ListHeaderComponent={
+        <>
+          <Text style={styles.title}>Search The Movie</Text>
 
-      <View style={styles.textInputHolder}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="Search..."
-          value={textInput}
-          onChangeText={(text) => setTextInput(text)}
-        />
+          <View style={styles.textInputHolder}>
+            <TextInput
+              style={styles.textInput}
+              placeholder="Search..."
+              value={textInput}
+              onChangeText={(text) => setTextInput(text)}
+            />
 
-        <TouchableOpacity style={styles.buttonSearch} onPress={fetchMovie}>
-          <Text style={styles.buttonSearchText}>Search</Text>
-        </TouchableOpacity>
-      </View>
-
-      {loading ? (
-        <ActivityIndicator size="large" />
-      ) : (
-        <View>
-          <FlatList
-            data={movies}
-            keyExtractor={(item) => item.id}
-            renderItem={renderItem}
-          />
-        </View>
-      )}
-    </ScrollView>
+            <TouchableOpacity style={styles.buttonSearch} onPress={fetchMovie}>
+              <Text style={styles.buttonSearchText}>Search</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      }
+      data={movies}
+      keyExtractor={(item) => item.id}
+      renderItem={renderItem}
+    />
   );
 };
 
