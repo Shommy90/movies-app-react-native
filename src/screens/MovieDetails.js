@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,10 +7,18 @@ import {
   ScrollView,
   ImageBackground,
 } from "react-native";
+import StarRating from "react-native-star-rating";
 
 const MovieDetails = (props) => {
   const movie = props.route.params;
+  const [starCount, setStarCount] = useState("");
   console.log("details props: ", movie);
+
+  useEffect(() => {
+    setStarCount(movie.imdb_rating / 2);
+  }, []);
+
+  const onStarRatingPress = (rating) => setStarCount(rating);
 
   return (
     <ScrollView>
@@ -36,6 +44,16 @@ const MovieDetails = (props) => {
             <Text style={styles.movieTitle}>
               {movie.title} ({movie.imdb_rating})
             </Text>
+
+            <View style={styles.starRatingsHolder}>
+              <StarRating
+                disabled={false}
+                maxStars={5}
+                rating={starCount}
+                selectedStar={(rating) => onStarRatingPress(rating)}
+                fullStarColor={"#f5c518"}
+              />
+            </View>
           </View>
         </View>
 
@@ -93,7 +111,7 @@ const styles = StyleSheet.create({
   poster: {
     width: 130,
     height: 200,
-    marginRight: 20,
+    marginRight: 10,
     resizeMode: "cover",
   },
   titleRatingHolder: {
